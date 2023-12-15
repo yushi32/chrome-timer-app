@@ -1,0 +1,21 @@
+{
+	"name": "timer app",
+	"description": "タイマーアプリ",
+	"version": "0.0.1",
+	"manifest_version": 3,
+	"action": {
+		"default_popup": "index.html"
+	},
+	"background": {
+		"service_worker": "src/background.js",
+		"type": "module"
+	},
+	"permissions": [
+		"background",
+		"identity",
+		"tabs"
+	],
+	"content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'"
+  }
+}
