@@ -75,7 +75,7 @@ const changeHistory = (data) => {
     const day = now.getDate().toString().padStart(2, '0');
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
-    const timestamp = `${year}年${month}月${day}日${hours}時${minutes}分`;
+    const timestamp = `${year}/${month}/${day} ${hours}時${minutes}分`;
 
     const history = result.history || []; // 既存の履歴を取得、なければ空の配列を使う
     
@@ -88,6 +88,12 @@ const changeHistory = (data) => {
     // 更新された履歴を保存
     chrome.storage.local.set({ history: history }, () => {});
   });
+};
+
+const getHistory = (sendResponse) => {
+  chrome.storage.local.get(['history'], (result) => {
+    sendResponse(result.history);
+  })
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -111,6 +117,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       finishTimer();
       changeHistory(elapsedTime);
       sendResponse();
+      return true;
+    case 'get-logs':
+      getHistory(sendResponse);
       return true;
   }
 });
