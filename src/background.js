@@ -93,11 +93,7 @@ const changeHistory = (data) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   //console.log(message.type);
   switch (message.type) {
-    case 'test':
-      sendResponse('テキストを更新');
-      // 非同期処理を行う場合はreturn true;が必要
     case 'init' :
-      //startTime ? sendResponse(true) : sendResponse(false);
       initApp(sendResponse);
       return true;
     case 'start':
