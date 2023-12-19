@@ -66,10 +66,24 @@ const initApp = (sendResponse) => {
 
 const changeHistory = (data) => {
   chrome.storage.local.get(['history'], (result) => {
+    const duration = formatTime(Math.floor(data / 1000));
+
+    // 20xx年MM月dd日tt時mm分の形式のタイムスタンプを作る
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const timestamp = `${year}年${month}月${day}日${hours}時${minutes}分`;
+
     const history = result.history || []; // 既存の履歴を取得、なければ空の配列を使う
     
     if (history.length > 9) history.shift();
-    history.push(data);
+    history.push({
+      duration,
+      timestamp,
+    });
 
     // 更新された履歴を保存
     chrome.storage.local.set({ history: history }, () => {});
