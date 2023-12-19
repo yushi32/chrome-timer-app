@@ -17,7 +17,7 @@ function Popup() {
 	const ActiveComponent = components[mode];
 
 	return (
-		<div className="App flex flex-col items-center justify-center" style={{ height: 150, width: 300 }}>
+		<div className="App flex flex-col items-center justify-center" style={{ height: 250, width: 320 }}>
 			<Header mode={mode} setMode={setMode} />
 			<ActiveComponent />
 		</div>
