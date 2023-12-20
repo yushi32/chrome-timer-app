@@ -5,7 +5,9 @@ export function Logs() {
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: 'get-logs' }, (res) => {
-      setLogs(res);
+      if (Array.isArray(res)) {
+        setLogs(res);
+      }
     });
   }, []);
 
